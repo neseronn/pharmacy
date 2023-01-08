@@ -9,13 +9,22 @@ class MedicineNomenclature(models.Model):
     dosage = models.IntegerField()
     price = models.FloatField(null=False)
 
+    def __str__(self):
+        return self.title
+
 
 class ReleaseForm(models.Model):
     title = models.CharField(null=False, max_length=30)
 
+    def __str__(self):
+        return self.title
+
 
 class MedicinesGroup(models.Model):
-    models.CharField(null=False, max_length=50)
+    group_name = models.CharField(null=False, max_length=50)
+
+    def __str__(self):
+        return self.group_name
 
 
 class Staff(models.Model):
@@ -23,15 +32,21 @@ class Staff(models.Model):
     salary = models.IntegerField(null=False)
     employment_date = models.DateField(null=False)
 
+    def __str__(self):
+        return self.fio_employee
+
 
 class Buyers(models.Model):
     fio_buyer = models.CharField(null=False, max_length=60)
     email = models.CharField(null=False, max_length=30)
     phone_number = models.CharField(null=False, max_length=12)
 
+    def __str__(self):
+        return self.fio_buyer
+
 
 class SalesRegistration(models.Model):
-    medicine = models.ForeignKey("MedicineNomenclature", on_delete=models.PROTECT, null=False)
+    medicine = models.ManyToManyField(MedicineNomenclature, blank=True)     # ??
     count = models.IntegerField(null=False)
     buyer = models.ForeignKey("Buyers", on_delete=models.PROTECT)
     cost = models.FloatField(null=False)
